@@ -61,12 +61,14 @@ int main()
             Command *cmd = NULL;
             switch(hashSearch(stringFirstWord(&(vec[i])), &cmd)) {
                 case(CMD_SUCCES):       {switch(cmd->function(vec[i])) {
-                                            case(CMD_INVALID_ARGS): { printf("..."); break;}
-                                            case(CMD_RUNTIME_ERROR):{ printf("..."); break;}
+                                            case(CMD_INVALID_ARGS): { printf("%s", error); break;}
+                                            case(CMD_RUNTIME_ERROR):{ printf("%s", error); break;}
                                          }
+
+                                         error = NULL;
                                          break;
                                         }
-                case(CMD_NOT_FOUND):    printf("comanda nu exista");
+                case(CMD_NOT_FOUND):    printf("!! Comanda nu exista !!\n");
             }
         }
 

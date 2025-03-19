@@ -85,11 +85,35 @@ void init()
 {
     for(size_t i = 0; i < 97; i++)
         hashTable[i] = NULL;
+    
+    exit_code = 1;
+    CALC_PWD();
 
     hashInsert(cmd_create("exit", "", cmd_exit));
+    hashInsert(cmd_create("pwd", "", cmd_pwd));
+    hashInsert(cmd_create("cd", "", cmd_cd));
     hashInsert(cmd_create("echo", "", cmd_echo));
     hashInsert(cmd_create("touch", "", cmd_touch));
     hashInsert(cmd_create("print", "", cmd_print));
     hashInsert(cmd_create("copy", "", cmd_copy));
     hashInsert(cmd_create("rm", "", cmd_rm));
+    hashInsert(cmd_create("help", "", cmd_help));
+}
+
+CommandStatus cmd_help(char* argv)
+{
+    if(!argv)
+        hashWriteFunctions();
+    else 
+    {
+        Command *cmd;
+        if(hashSearch(&argv, &cmd))
+            printf("%s\n", cmd->details);
+        else {
+            error = "!! Comanda nu exista, consultati 'help', pentru a interoga lista cu toate comenzile existente !!\n";
+            return CMD_INVALID_ARGS;
+        }
+    }
+
+    return CMD_SUCCES;
 }

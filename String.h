@@ -9,7 +9,12 @@ typedef enum {
     CMD_RUNTIME_ERROR
 } CommandStatus;
 
-#define CHECK_ARG(arg)     if(!arg)    return CMD_INVALID_ARGS;
+#define CHECK_ARG(arg, cond) \
+    if(cond) {\
+        if(!(arg)) return CMD_INVALID_ARGS; }\
+    else \
+        if(arg) return CMD_INVALID_ARGS; 
+
 #define CHECK_ALLOC(ptr) \
     if(!(ptr)) { \
         printf("!! variabilei '%s' NU i s-a putut aloca memorie!! (%s, linia %s)\n", #ptr, __FILE__, __LINE__); \

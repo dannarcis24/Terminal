@@ -25,4 +25,8 @@ void hashWriteFunctions();
 // Free the memory allocated by the hash table.
 void hashDelete();
 
+// Initialise the hash table with commands.
 void init();
+
+// Write the documentation of a command.
+CommandStatus cmd_help(char*);

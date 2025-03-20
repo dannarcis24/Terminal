@@ -39,7 +39,8 @@ void mathFunctionValues(char **str)
         char *p;
         while((p = strstr(*str, (functions[i]).name)))
         {
-            char *p_end = strchr(p, ')'), num_str[50];
+            char *p_end = strchr(p, ')'), num_str[50]; // cazul simplu, o functie contine DOAR un numar, NU o expresie
+            strncpy(num_str, p + functions[i].length + 1, (p_end - 1 - *str) - (p + functions[i].length + 1 - *str));
             double num = functions[i].func(atoi(num_str));
             if(num == NAN) {
                 FREE_MEM(*str);
@@ -57,7 +58,7 @@ void mathFunctionValues(char **str)
 
     if(length != strlen(*str))
     {
-        *str = (char*)realloc(*str, sizeof(strlen(*str)));
+        *str = (char*)realloc(*str, sizeof(strlen(*str) + 1));
         CHECK_ALLOC(*str);
     }
 }

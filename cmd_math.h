@@ -1,10 +1,10 @@
-#include "cmd.h"
+#include "list.h"
 
 typedef struct b {
     char *left, *right;
     struct b **priority_operations;
     double val;
-} Node;
+} ExprNode;
 
 typedef double (*math_func)(double);
 
@@ -13,5 +13,15 @@ typedef struct {
     int length;
     math_func func;
 } FunctionPair;
+
+
+// Calculate ctg(x) or return NAN, if the function is not defined at that point.
+double ctg(double);
+
+// Calculate log in base 2 of x => log2(x) or return NAN, if the function is not defined at that point.
+double log2(double);
+
+// Calculates and replaces functions in mathematical expressions
+void mathFunctionValues(char**);
 
 CommandStatus cmd_math(char*);

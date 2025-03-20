@@ -1,16 +1,5 @@
 #include "hash_map.h"
 
-List* nodeCreate(Command *name)
-{
-    List *node = (List*)malloc(sizeof(List));
-    CHECK_ALLOC(node);
-
-    node->option = name;
-    node->next = NULL;
-
-    return node;
-}
-
 unsigned long hashFunction(const char *elem)
 {
     unsigned long hash = 5381;
@@ -27,7 +16,7 @@ void hashInsert(Command *elem)
     exit_code = 1;
     unsigned long position = hashFunction(elem->name);
 
-    List *new = nodeCreate(elem);
+    Node *new = nodeCreate(elem);
 
     if(!hashTable[position])
         hashTable[position] = new;
@@ -40,9 +29,9 @@ void hashInsert(Command *elem)
 
 CommandStatus hashSearch(const char* name, Command **cmd)
 {
-    for(List *aux = hashTable[hashFunction(name)]; aux; aux = aux->next)
-        if(strcmp(aux->option->name, name) == 0) {
-            *cmd = aux->option;
+    for(Node *aux = hashTable[hashFunction(name)]; aux; aux = aux->next)
+        if(strcmp(((Command*)(aux->option))->name, name) == 0) {
+            *cmd = (Command*)(aux->option);
             return CMD_SUCCES;
         }
     
@@ -51,14 +40,14 @@ CommandStatus hashSearch(const char* name, Command **cmd)
 
 void hashWriteFunctions()
 {
-    printf("Lista cu comenzi disponibile este:\n");
+    printf("Nodea cu comenzi disponibile este:\n");
     for(size_t i = 0; i < 97; i++)
         if(hashTable[i])
         {
             printf("%d.\n", i);
 
-            for(List *node = hashTable[i]; node; node = node->next)
-                printf("%s -> detalii\n", node->option->name);
+            for(Node *node = hashTable[i]; node; node = node->next)
+                printf("%s -> detalii\n", ((Command*)(node->option))->name);
             printf("\n");
         }
 }
@@ -67,10 +56,10 @@ void hashDelete()
 {
     for(size_t i = 0; i < 97; i++)
     {
-        List *node = hashTable[i];
+        Node *node = hashTable[i];
         while(node)
         {
-            List *aux = node;
+            Node *aux = node;
             node = node->next;
 
             FREE_MEM(aux->option);
@@ -110,7 +99,7 @@ CommandStatus cmd_help(char* argv)
         if(hashSearch(argv, &cmd))
             printf("%s\n", cmd->details);
         else {
-            error = "!! Comanda nu exista, consultati 'help', pentru a interoga lista cu toate comenzile existente !!\n";
+            error = "!! Comanda nu exista, consultati 'help', pentru a interoga Nodea cu toate comenzile existente !!\n";
             return CMD_INVALID_ARGS;
         }
     }

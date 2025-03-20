@@ -1,14 +1,6 @@
 #include "cmd_math.h"
 
-typedef struct a {
-    Command *option;
-    struct a* next;
-} List;
-
-List* hashTable[97];
-
-// Create a List element, a node of a simply linked list.
-List* nodeCreate(Command*);
+Node* hashTable[97];
 
 // The djb2 hash function. Returns the position of a command in the table.
 unsigned long hashFunction(const char*);

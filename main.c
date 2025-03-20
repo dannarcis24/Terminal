@@ -1,4 +1,4 @@
-#include "HashMap.h"
+#include "hash_map.h"
 
 char** commandsList(char** str, int *length)
 {
@@ -37,8 +37,7 @@ char** commandsList(char** str, int *length)
     }
     words[*length] = NULL; // Terminatorul listei
 
-    free(*str);
-    *str = NULL;
+    FREE_MEM(*str);
     return words;
 }
 

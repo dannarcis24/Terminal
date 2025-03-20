@@ -1,4 +1,4 @@
-#include "Commands.h"
+#include "cmd.h"
 
 Command* cmd_create(char* name, char* details, Command_Function cmd)
 {

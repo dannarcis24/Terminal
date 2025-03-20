@@ -1,4 +1,4 @@
-#include "Commands.h"
+#include "cmd_math.h"
 
 typedef struct a {
     Command *option;

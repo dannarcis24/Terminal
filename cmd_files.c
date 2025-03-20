@@ -1,4 +1,4 @@
-#include "Commands.h"
+#include "cmd.h"
 
 CommandStatus cmd_echo(char *argv)
 {

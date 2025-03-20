@@ -9,6 +9,8 @@ typedef enum {
     CMD_RUNTIME_ERROR
 } CommandStatus;
 
+#define FREE_MEM(ptr)   free(ptr);  ptr = NULL;
+
 #define CHECK_ARG(arg, cond) \
     if(cond) {\
         if(!(arg)) return CMD_INVALID_ARGS; }\

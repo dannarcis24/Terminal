@@ -1,4 +1,4 @@
-#include "String.h"
+#include "string.h"
 
 CommandStatus stringTrim(char **str)
 {
@@ -8,8 +8,7 @@ CommandStatus stringTrim(char **str)
     while(*start == ' ')  start++; // cautam primul caracter diferit de spatiu
     if(*start == '\0')
     {
-        free(*str);
-        *str = NULL;
+        FREE_MEM(*str);
         return CMD_NOT_FOUND; // sirul a continut doar spatii => comanda invalida
     }
 
@@ -67,8 +66,7 @@ char* stringFirstWord(char **str)
     char* word;
     if(!strchr(*str, ' ')) {
         word = strdup(*str);
-        free(*str);
-        *str = NULL;
+        FREE_MEM(*str);
 
         return word;
     }
@@ -119,8 +117,7 @@ char** stringSplit(char **str, int *length)
         CHECK_ALLOC(words);
     }
 
-    free(*str);
-    *str = NULL;
+    FREE_MEM(*str);
     return words;
 }
 
@@ -146,9 +143,9 @@ void stringsDelete(char ***str)
 {
     if(!(*str)) return;
 
-    for(size_t i = 0; (*str)[i]; i++)
-        free((*str)[i]);
+    for(size_t i = 0; (*str)[i]; i++) {
+        FREE_MEM((*str)[i]);
+    }
 
-    free(*str);
-    *str = NULL;
+    FREE_MEM(*str);
 }

@@ -1,4 +1,4 @@
-#include "String.h"
+#include "string.h"
 #include <direct.h>
 
 #define CHECK_OPEN(file, name) \

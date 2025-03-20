@@ -1,4 +1,4 @@
-#include "HashMap.h"
+#include "hash_map.h"
 
 List* nodeCreate(Command *name)
 {
@@ -73,8 +73,8 @@ void hashDelete()
             List *aux = node;
             node = node->next;
 
-            free(aux->option);
-            free(aux);
+            FREE_MEM(aux->option);
+            FREE_MEM(aux);
         }
 
         hashTable[i] = NULL;
@@ -107,7 +107,7 @@ CommandStatus cmd_help(char* argv)
     else 
     {
         Command *cmd;
-        if(hashSearch(&argv, &cmd))
+        if(hashSearch(argv, &cmd))
             printf("%s\n", cmd->details);
         else {
             error = "!! Comanda nu exista, consultati 'help', pentru a interoga lista cu toate comenzile existente !!\n";

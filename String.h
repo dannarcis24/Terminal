@@ -9,6 +9,8 @@ typedef enum {
     CMD_RUNTIME_ERROR
 } CommandStatus;
 
+CommandStatus status = CMD_SUCCES;
+
 #define FREE_MEM(ptr)   free(ptr);  ptr = NULL;
 
 #define CHECK_ARG(arg, cond) \
@@ -20,8 +22,8 @@ typedef enum {
 #define CHECK_ALLOC(ptr) \
     if(!(ptr)) { \
         printf("!! variabilei '%s' NU i s-a putut aloca memorie!! (%s, linia %s)\n", #ptr, __FILE__, __LINE__); \
-        exit(CMD_RUNTIME_ERROR); \
-    }
+        status = CMD_RUNTIME_ERROR; \
+    }   status = CMD_SUCCES;
 
 // Remove spaces from the beginning and end of a string with memory reallocation.
 CommandStatus stringTrim(char**);

@@ -3,10 +3,13 @@
 char** commandsList(char** str, int *length)
 {
     CHECK_ALLOC(*str);
+    if (status) return NULL;
+    
 
     int size = 5;
     char **words = (char**)malloc(sizeof(char*) * size), *start = *str, *p;
     CHECK_ALLOC(words);
+    if(status)  return NULL;
     *length = 0;
 
     while ((p = strstr(start, " && ")))
@@ -15,6 +18,7 @@ char** commandsList(char** str, int *length)
 
         words[*length] = (char*)malloc(len + 1);
         CHECK_ALLOC(words[*length]);
+        if(status)  return NULL;
 
         strncpy(words[*length], start, len);
         words[(*length)++][len] = '\0'; // terminator de șir
@@ -25,6 +29,7 @@ char** commandsList(char** str, int *length)
             size *= 2;
             words = (char**)realloc(words, sizeof(char*) * size);
             CHECK_ALLOC(words);
+            if(status)  return NULL;
         }
     }
 
@@ -34,6 +39,7 @@ char** commandsList(char** str, int *length)
     if(*length + 1 < size) {
         words = (char**)realloc(words, sizeof(char*) * (*length + 1));
         CHECK_ALLOC(words);
+        if(status)  return NULL;
     }
     words[*length] = NULL; // Terminatorul listei
 

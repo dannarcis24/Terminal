@@ -4,6 +4,7 @@ Command* cmd_create(char* name, char* details, Command_Function cmd)
 {
     Command *node = (Command*)malloc(sizeof(Command));
     CHECK_ALLOC(node);
+    if(status)  return NULL;
 
     node->name = name;
     node->details = details;

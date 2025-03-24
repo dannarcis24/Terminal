@@ -2,7 +2,7 @@
 
 typedef struct b {
     char *left, *right;
-    struct b **priority_operations;
+    Queue *priority_operations;
     double val;
 } ExprNode;
 
@@ -14,6 +14,9 @@ typedef struct {
     math_func func;
 } FunctionPair;
 
+ExprNode* exprNodeCreate(char*, char*);
+
+void exprNodeDelete(ExprNode**);
 
 // Calculate ctg(x) or return NAN, if the function is not defined at that point.
 double ctg(double);

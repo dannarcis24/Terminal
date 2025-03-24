@@ -18,6 +18,7 @@ CommandStatus stringTrim(char **str)
     int length = end - start + 1;
     char *aux = (char*)malloc(length + 1);
     CHECK_ALLOC(aux);
+    if(status)  return CMD_RUNTIME_ERROR;
 
     strncpy(aux, start, length);
     aux[length] = '\0';
@@ -34,6 +35,7 @@ char* stringRead()
 
     char *str = (char*)malloc(size);
     CHECK_ALLOC(str);
+    if(status)  return NULL;
 
     while((c = fgetc(stdin)) != '\n')
     {
@@ -42,6 +44,7 @@ char* stringRead()
             size *= 2;
             str = (char*)realloc(str, size);
             CHECK_ALLOC(str);
+            if(status)  return NULL;
         }
 
         str[pos++] = c;
@@ -52,6 +55,7 @@ char* stringRead()
     {
         str = (char*)realloc(str, pos + 1);
         CHECK_ALLOC(str);
+        if(status)  return NULL;
     }
 
     if(stringTrim(&str) != CMD_SUCCES)
@@ -77,6 +81,7 @@ char* stringFirstWord(char **str)
 
     word = (char*)malloc(i + 1);
     CHECK_ALLOC(word);
+    if(status)  return NULL;
     strncpy(word, *str, i);
     word[i] = '\0';
 
@@ -96,6 +101,7 @@ char** stringSplit(char **str, int *length)
     *length = 0;
     char **words = (char**)malloc(sizeof(char*) * size), *p= strtok(*str, " ");
     CHECK_ALLOC(words);
+    if(status)  return NULL;
 
     while(p)
     {
@@ -104,6 +110,7 @@ char** stringSplit(char **str, int *length)
             size *= 2;
             words = (char**)realloc(words, sizeof(char*) * size);
             CHECK_ALLOC(words);
+            if(status)  return NULL;
         }
 
         words[(*length)++] = strdup(p);
@@ -115,6 +122,7 @@ char** stringSplit(char **str, int *length)
     {
         words = (char**)realloc(words, sizeof(char*) * ((*length) + 1));
         CHECK_ALLOC(words);
+        if(status)  return NULL;
     }
 
     FREE_MEM(*str);
@@ -123,7 +131,8 @@ char** stringSplit(char **str, int *length)
 
 CommandStatus stringRemoveSpaces(char **str) 
 {
-    if (!(*str)) return CMD_INVALID_ARGS;
+    CHECK_ALLOC(*str);
+    if(status)  return CMD_INVALID_ARGS;
 
     char *start = *str, *dest = *str;
     while (*start) {
@@ -135,6 +144,7 @@ CommandStatus stringRemoveSpaces(char **str)
 
     *str = (char*)realloc(*str, dest - *str + 1);
     CHECK_ALLOC(*str);
+    if(status)  return CMD_RUNTIME_ERROR;
 
     return CMD_SUCCES;
 }
